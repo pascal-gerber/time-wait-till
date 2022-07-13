@@ -2,7 +2,7 @@
 
 ## dayTime.sleepTill("16:00")
 
-This is a module i've invented myself/
+This is a module i've invented myself\
 In this module you can only use one command
 ### Syntax
 dayTime.sleepTill()
