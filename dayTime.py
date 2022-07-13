@@ -1,13 +1,13 @@
 #This module was made by pascal
 
-import asyncio
+import threading
 import time
 import os
 
 everyCheckpoint = {}
 onlyOneThreading = True
 
-def sleepTill(inputtedTime, target = None, wait = False):
+def sleepTill(inputtedTime, target = None):
     global onlyOneThreading
     global everyCheckpoint
     splittedTime = inputtedTime.split(":")
@@ -35,15 +35,18 @@ def sleepTill(inputtedTime, target = None, wait = False):
             everyCheckpoint[str(executedMomment.tm_year) + ":" + inputtedTime] = target
         elif lenghtOfSplits == 5:
             everyCheckpoint[inputtedTime] = target
-
-        if onlyOneThreading == True:
-            asyncio.run(checkTime(target, wait))
-            onlyOneThreading = False
+            
+    if onlyOneThreading == True:
+        OffTopic = threading.Thread(target = lambda: checkTime())
+        OffTopic.start()
+        onlyOneThreading = False
+            
     return
     
 
 
-async def checkTime(requestedFunction, TimeOrAsync):
+def checkTime():
+    global everyCheckpoint
     while 1:        
         result = time.localtime(int(time.time()))
 
@@ -71,13 +74,12 @@ async def checkTime(requestedFunction, TimeOrAsync):
 
         if timeFormat in everyCheckpoint:
             everyCheckpoint[timeFormat]()
+            del everyCheckpoint[timeFormat]
             
         del result
         del timeFormat
-        if TimeOrAsync == True:
-            time.sleep(1)
-        else:
-            await asyncio.sleep(1)
+        time.sleep(1)
+
         
 #testing purposes       
 #sleepTill("2022:13:16:48:00")

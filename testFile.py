@@ -1,9 +1,9 @@
 import dayTime
-import time
 
 def say(test):
     print(test)
 
-dayTime.sleepTill("18:49:00", target = lambda: say("fuck you reb"))
-dayTime.sleepTill("18:49:05", target = lambda: say("fuck you dave"))
+dayTime.sleepTill("19:10:00", target = lambda: say("test1"))
+
+dayTime.sleepTill("19:10:05", target = lambda: say("test2"))
 
